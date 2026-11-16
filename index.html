@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1d4a39">
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<title>Escoba · Puntos</title>
+<link href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e9efe6;--card:#fff;--ink:#17261f;--mute:#5d6f64;--line:#cfdacb;--felt:#1d4a39;--gold:#c28a0a;--on:#1d4a39;--onink:#fff;--bad:#a8322b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10261d;--card:#183a2d;--ink:#f1efe4;--mute:#9fb8a8;--line:#2a5442;--felt:#0b1c15;--gold:#e8b835;--on:#e8b835;--onink:#10261d;--bad:#ff8a80;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10261d;--card:#183a2d;--ink:#f1efe4;--mute:#9fb8a8;--line:#2a5442;--felt:#0b1c15;--gold:#e8b835;--on:#e8b835;--onink:#10261d;--bad:#ff8a80;color-scheme:dark}
+*{box-sizing:inherit;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,sans-serif;min-height:100vh}
+h1,h2,.num{font-family:Alegreya,Georgia,serif}
+main{max-width:520px;margin:0 auto;padding:16px 14px 40px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+h1{margin:0;font-size:28px;font-weight:800}
+button{font:inherit;color:inherit;cursor:pointer}
+.btn{border:0;border-radius:12px;padding:14px 16px;font-weight:700;background:var(--on);color:var(--onink);width:100%}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.sm{width:auto;padding:8px 12px;font-size:14px}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+input[type=text]{width:100%;font:inherit;padding:12px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);margin-bottom:8px}
+.seg{display:flex;gap:8px;margin:6px 0 14px}
+.seg button{flex:1;padding:12px;border-radius:10px;border:1.5px solid var(--line);background:transparent;font-weight:700}
+.seg button.on{background:var(--on);color:var(--onink);border-color:var(--on)}
+.board{display:grid;gap:10px;margin-bottom:12px}
+.pl{background:var(--felt);color:#f6f1de;border-radius:16px;padding:14px 16px;position:relative;overflow:hidden}
+.pl.win{outline:3px solid var(--gold)}
+.pl .n{display:flex;justify-content:space-between;align-items:baseline}
+.pl .name{font-weight:700;font-size:18px}
+.pl .num{font-size:54px;font-weight:800;line-height:1;color:#f3d56b}
+.bar{height:6px;border-radius:3px;background:rgba(255,255,255,.18);margin-top:8px}
+.bar i{display:block;height:100%;border-radius:3px;background:#f3d56b;transition:width .3s}
+.banner{background:var(--gold);color:#1a1405;border-radius:14px;padding:14px;font-weight:800;text-align:center;margin-bottom:12px;font-size:18px}
+.rd{display:flex;align-items:center;gap:8px;padding:10px 0;border-top:1px solid var(--line)}
+.rd:first-child{border-top:0}
+.rd b{min-width:26px;color:var(--mute)}
+.rd .pts{flex:1;display:flex;gap:6px;flex-wrap:wrap}
+.chip{padding:3px 9px;border-radius:99px;background:var(--bg);font-size:14px}
+.chip.z{opacity:.45}
+.x{border:0;background:none;color:var(--bad);font-size:20px;padding:4px 8px}.ed{border:0;background:none;color:var(--on);font-size:15px;font-weight:700;padding:4px 8px;text-decoration:underline}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;z-index:5}
+.sheet.open{display:flex}
+.sheet>div{background:var(--bg);width:100%;max-width:520px;margin:0 auto;border-radius:20px 20px 0 0;padding:16px 14px calc(16px + env(safe-area-inset-bottom,0px));max-height:92vh;overflow:auto}
+.cat{margin-bottom:12px}
+.cat>div:first-child{font-weight:700;margin-bottom:6px}
+.cat small{color:var(--mute);font-weight:500}
+.opts{display:flex;gap:6px}
+.opts button{flex:1;padding:12px 4px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.opts button.on{background:var(--on);color:var(--onink);border-color:var(--on)}
+.step{display:flex;align-items:center;justify-content:space-between;padding:6px 0}
+.step div{display:flex;align-items:center;gap:14px}
+.step button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);font-size:22px;font-weight:700}
+.step span{min-width:24px;text-align:center;font-size:22px;font-weight:800}
+.tot{text-align:center;color:var(--mute);margin:6px 0 12px}
+.empty{color:var(--mute);text-align:center;padding:10px}
+</style></head><body><main id="app"></main>
+<div class="sheet" id="sheet"><div id="sbody"></div></div>
+<script>
+const KEY='escoba_v1';
+let S=null;
+function load(){try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){S=null}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+load();
+let setup={n:2,target:15,names:['','','','']};
+let draft=null;
+const CATS=[['cartas','Más cartas','1 pto · empate: nadie'],['oros','Más oros','1 pto · empate: nadie'],['sietes','Más sietes (setenta)','1 pto · empate: nadie'],['velo','Siete de oro','1 pto']];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function roundPts(r){const p=S.players.map((_,i)=>r.esc[i]||0);CATS.forEach(([k])=>{if(r[k]>=0)p[r[k]]++});return p}
+function totals(){const t=S.players.map(()=>0);S.rounds.forEach(r=>roundPts(r).forEach((v,i)=>t[i]+=v));return t}
+function winner(){if(!S.rounds.length)return -1;const t=totals(),m=Math.max(...t);if(m<S.target)return -1;const w=t.reduce((a,v,i)=>v===m?a.concat(i):a,[]);return w.length===1?w[0]:-1}
+function render(){
+ const a=$('app');
+ if(!S){
+  const nm=i=>`<input type="text" maxlength="14" placeholder="Jugador ${i+1}" value="${esc(setup.names[i])}" oninput="setup.names[${i}]=this.value">`;
+  a.innerHTML=`<header><h1>Escoba</h1></header>
+  <div class="card"><b>Jugadores</b><div class="seg">${[2,3,4].map(n=>`<button class="${setup.n===n?'on':''}" onclick="setup.n=${n};render()">${n}</button>`).join('')}</div>
+  ${Array.from({length:setup.n},(_,i)=>nm(i)).join('')}
+  <b>Se juega a</b><div class="seg">${[15,21,31].map(n=>`<button class="${setup.target===n?'on':''}" onclick="setup.target=${n};render()">${n}</button>`).join('')}</div></div>
+  <button class="btn" onclick="start()">Empezar partida</button>`;return}
+ const t=totals(),w=winner();
+ const lead=Math.max(...t);
+ a.innerHTML=`<header><h1>Escoba</h1><button class="btn ghost sm" onclick="newGame()">Nueva</button></header>
+ ${w>=0?`<div class="banner">¡Ganó ${esc(S.players[w])}! 🏆</div>`:''}
+ <div class="board">${S.players.map((p,i)=>`<div class="pl ${w===i?'win':''}"><div class="n"><span class="name">${esc(p)}</span><span class="num">${t[i]}</span></div><div class="bar"><i style="width:${Math.min(100,t[i]/S.target*100)}%"></i></div></div>`).join('')}</div>
+ <div class="tot">Se juega a ${S.target} · Mano ${S.rounds.length+1}</div>
+ <button class="btn" onclick="openRound()">Anotar mano</button>
+ <h2 style="margin:20px 0 8px;font-size:22px">Manos</h2>
+ <div class="card">${S.rounds.length?S.rounds.map((r,ri)=>{const p=roundPts(r);return `<div class="rd"><b>${ri+1}</b><div class="pts">${p.map((v,i)=>`<span class="chip ${v?'':'z'}">${esc(S.players[i])} +${v}</span>`).join('')}</div><button class="ed" onclick="openRound(${ri})">Editar</button><button class="x" aria-label="Borrar mano ${ri+1}" onclick="del(${ri})">✕</button></div>`}).reverse().join(''):'<div class="empty">Todavía no hay manos. Anotá la primera.</div>'}</div>`;
+}
+function start(){const names=Array.from({length:setup.n},(_,i)=>setup.names[i].trim()||'Jugador '+(i+1));S={players:names,target:setup.target,rounds:[]};save();render()}
+function ask(msg,label,fn){window._ok=fn;$('sbody').innerHTML=`<h2 style="margin:0 0 14px;font-size:22px">${msg}</h2><div style="display:flex;gap:8px"><button class="btn ghost" onclick="closeSheet()">Cancelar</button><button class="btn" onclick="closeSheet();window._ok()">${label}</button></div>`;$('sheet').classList.add('open')}
+function newGame(){ask('¿Empezar una partida nueva? Se borran los puntos actuales.','Nueva partida',()=>{S=null;save();render()})}
+function del(i){ask('¿Borrar la mano '+(i+1)+'?','Borrar',()=>{S.rounds.splice(i,1);save();render()})}
+let editing=-1;
+function openRound(i){editing=(typeof i==='number')?i:-1;draft=editing>=0?JSON.parse(JSON.stringify(S.rounds[editing])):{cartas:-1,oros:-1,sietes:-1,velo:-1,esc:S.players.map(()=>0)};drawSheet();$('sheet').classList.add('open')}
+function closeSheet(){$('sheet').classList.remove('open')}
+function pick(k,i){draft[k]=draft[k]===i?-1:i;drawSheet()}
+function esc2(i,d){draft.esc[i]=Math.max(0,draft.esc[i]+d);drawSheet()}
+function drawSheet(){
+ const sc=$('sbody').scrollTop;
+ const p=roundPts(draft);
+ $('sbody').innerHTML=`<h2 style="margin:0 0 12px;font-size:24px">${editing>=0?'Editar mano '+(editing+1):'Mano '+(S.rounds.length+1)}</h2>
+ ${CATS.map(([k,l,h])=>`<div class="cat"><div>${l} <small>${h}</small></div><div class="opts">${S.players.map((n,i)=>`<button class="${draft[k]===i?'on':''}" onclick="pick('${k}',${i})">${esc(n)}</button>`).join('')}</div></div>`).join('')}
+ <div class="cat"><div>Escobas <small>1 pto cada una</small></div>${S.players.map((n,i)=>`<div class="step"><span>${esc(n)}</span><div><button onclick="esc2(${i},-1)" aria-label="Restar">−</button><span>${draft.esc[i]}</span><button onclick="esc2(${i},1)" aria-label="Sumar">+</button></div></div>`).join('')}</div>
+ <div class="tot">Esta mano: ${S.players.map((n,i)=>esc(n)+' +'+p[i]).join(' · ')}</div>
+ <div style="display:flex;gap:8px"><button class="btn ghost" onclick="closeSheet()">Cancelar</button><button class="btn" onclick="confirmRound()">${editing>=0?'Guardar cambios':'Guardar mano'}</button></div>`;
+ $('sbody').scrollTop=sc}
+function confirmRound(){if(editing>=0)S.rounds[editing]=draft;else S.rounds.push(draft);editing=-1;save();closeSheet();render();if(winner()>=0)window.scrollTo(0,0)}
+$('sheet').addEventListener('click',e=>{if(e.target.id==='sheet')closeSheet()});
+render();
+try{if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js')}catch(e){}
+</script></body></html>
